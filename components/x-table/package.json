@@ -1,0 +1,21 @@
+{
+  "name": "x-table",
+  "version": "1.0.1",
+  "description": "基于 uView 的 table 组件",
+  "main": "x-table.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghostcode/x-table.git"
+  },
+  "peerDependencies": {
+    "uview-ui": "1.8.4"
+  },
+  "author": {
+    "name": "zhuxy",
+    "email": "ghostcode521@gmail.com"
+  },
+  "license": "MIT"
+}
