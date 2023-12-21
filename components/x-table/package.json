@@ -1,6 +1,6 @@
 {
   "name": "x-table",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "基于 uView 的 table 组件",
   "main": "x-table.vue",
   "scripts": {

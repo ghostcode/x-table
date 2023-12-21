@@ -2,18 +2,96 @@
 
 ```
 import XTable from "@/components/x-table/x-table.vue";
-<Xtable
+
+<ETable
   :columns="columns"
-  :dataSource="list"
+  :dataSource="dataSource"
 >
-</Xtable>
+
+  <template v-slot:index="{record,text,index}">
+    <view :style="{backgroundColor:'#71d5a1',color:'#fff'}">{{ index + 1}}</view>
+  </template>
+
+  <template v-slot:typeName="{record,text,index}">
+    <view :style="{color:'#f29100'}">{{text}}</view>
+  </template>
+
+  <template v-slot:action="actionProps">
+    <u-button size="mini" type="error">删除</u-button>
+  </template>
+
+</ETable>
 ```
 
 # 展示
 
-![image](https://user-images.githubusercontent.com/745181/229725596-ea2d8bbe-d737-4658-8608-24fa4448f20f.png)
+![image](https://github.com/ghostcode/text2img/assets/745181/3adc8c83-bbaa-4754-8e9f-05a31b65e973)
 
 # 参数
+
+## columns
+
+**列描述对象，是 columns 中的一项**
+
+| 参数        | 说明                                                                              | 类型             | 默认值 | 版本  |
+| ----------- | --------------------------------------------------------------------------------- | ---------------- | ------ | ----- |
+| title       | 列头显示文字                                                                      | string           | ""     |
+| dataIndex   | 列数据在数据项中对应的 key                                                        | string           | -      |
+| key         | Vue 中使用的 key                                                                  | string           | -      |
+| width       | 列宽                                                                              | string / number  | -      |
+| fixed       | 列是否固定                                                                        | "left" / "right" | -      |
+| colSpan     | 表头列合并,设置为 0 时，不渲染                                                    | number           | -      | 1.2.0 |
+| style       | 列样式（columns 中 width 属性的优先级高于此处设置的 width 样式）                  | object           | -      |
+| scopedSlots | 作用域插槽，配置支持 slot-scope 的属性，如：`scopedSlots: { customRender: 'XXX'}` | object           | -      | 1.1.0 |
+
+注: 小程序不支持[作用域插槽](https://zh.uniapp.dcloud.io/tutorial/vue-components.html#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8D%E6%94%AF%E6%8C%81%E5%88%97%E8%A1%A8)。
+
+```javascript
+columns = [
+  {
+    title: "序号",
+    dataIndex: "index",
+    key: "index",
+    width: 80,
+    scopedSlots: {
+      customRender: "index",
+    },
+  },
+  {
+    title: "名称",
+    dataIndex: "name",
+    key: "name",
+    colSpan: 2,
+  },
+  {
+    title: "功率(kWh)",
+    dataIndex: "power",
+    key: "power",
+    colSpan: 0,
+  },
+  {
+    title: "型号",
+    dataIndex: "modelName",
+    key: "modelName",
+  },
+  {
+    title: "类型",
+    dataIndex: "typeName",
+    key: "typeName",
+    width: 80,
+    scopedSlots: {
+      customRender: "typeName",
+    },
+  },
+  {
+    title: "操作",
+    width: 320,
+    scopedSlots: {
+      customRender: "action",
+    },
+  },
+];
+```
 
 ## dataSource
 
@@ -27,38 +105,20 @@ import XTable from "@/components/x-table/x-table.vue";
 dataSource = [
     {
       key: '1',
-      name: '定速1',
-      model: '32#',
-      type: '出风',
-      tongfengliang:'6000',
-      gonglv:'0.0025'
+      name:'定速1'
+      modelName: '32#',
+      power:0.74,
+      typeName: '定速1',
     },
     {
-      key: '1',
-      name: '定速1',
-      model: '32#',
-      type: '出风',
-      tongfengliang:'6000',
-      gonglv:'0.0025'
+      key: '2',
+      name:'定速2'
+      power:0.9,
+      modelName: '33#',
+      typeName: '定速1',
     },
 ]
 ```
-
-## columns
-
-**列描述对象，是 cloumns 中的一项**
-
-| 参数        | 说明                                                                              | 类型             | 默认值 | 版本  |
-| ----------- | --------------------------------------------------------------------------------- | ---------------- | ------ | ----- |
-| title       | 列头显示文字                                                                      | string           | ""     |
-| dataIndex   | 列数据在数据项中对应的 key                                                        | string           | -      |
-| key         | Vue 中使用的 key                                                                  | string           | -      |
-| width       | 列宽                                                                              | string / number  | -      |
-| fixed       | 列是否固定                                                                        | "left" / "right" | -      |
-| style       | 列样式（columns 中 width 属性的优先级高于此处设置的 width 样式）                  | object           | -      |
-| scopedSlots | 作用域插槽，配置支持 slot-scope 的属性，如：`scopedSlots: { customRender: 'XXX'}` | object           | -      | 1.0.1 |
-
-注: 小程序不支持[作用域插槽](https://zh.uniapp.dcloud.io/tutorial/vue-components.html#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8D%E6%94%AF%E6%8C%81%E5%88%97%E8%A1%A8)。
 
 ## bordered
 

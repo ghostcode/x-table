@@ -10,7 +10,7 @@
           :style="[columnsFixedLeftStyle]"
         >
           <view
-            class="th"
+            class="th fixed"
             v-for="(col, index) in columnsFixedLeft"
             :key="col.key"
             :style="[col.style]"
@@ -18,9 +18,10 @@
           >
         </view>
 
+        <!-- 非固定列 -->
         <view
           class="th"
-          v-for="(col, index) in columnsNormal"
+          v-for="(col, index) in columnsNormalHeader"
           :key="col.key"
           :style="[col.style]"
           >{{ col.title }}</view
@@ -81,6 +82,7 @@
             </view>
           </view>
 
+          <!-- 非固定列 -->
           <view
             class="td"
             v-for="(col, i) in columnsNormal"
@@ -252,6 +254,7 @@ export default {
         return item;
       });
     },
+    //左侧固定列
     columnsFixedLeft() {
       return this.columns
         .filter((item) => item.fixed === "left")
@@ -267,6 +270,7 @@ export default {
           return item;
         });
     },
+    // 不包含固定列
     columnsNormal() {
       return this.columns
         .filter((item) => !item.fixed)
@@ -280,6 +284,31 @@ export default {
           return item;
         });
     },
+    // 不包含：固定 和 colSpan = 0 的列
+    columnsNormalHeader() {
+      return this.columns
+        .filter((item) => !item.fixed && item.colSpan !== 0)
+        .map((item, index) => {
+          item = JSON.parse(JSON.stringify(item));
+
+          if (item.width) {
+            item.style = {
+              ...item.style,
+              flex: `0 ${item.colSpan ? item.colSpan : 0} ${item.width}rpx`,
+            };
+          }
+
+          if (item.colSpan) {
+            item.style = {
+              ...item.style,
+              flex: `${item.colSpan ? item.colSpan : 0} 0 auto`,
+            };
+          }
+
+          return item;
+        });
+    },
+    //右侧固定列
     columnsFixedRight() {
       return this.columns
         .filter((item) => item.fixed === "right")
